@@ -1,7 +1,6 @@
 import scrape_reddit_images
 
-from bottle import route, template, run, static_file, request, redirect
-
+from bottle import route, template, run, static_file, request, redirect, default_app
 
 @route('/')
 def show_index():
@@ -49,3 +48,5 @@ def show_image_page(user):
 if __name__ == '__main__':
 	run(host='127.0.0.1',
 		port=8080)
+else:
+	app = application = default_app()
