@@ -5,6 +5,13 @@ import sys
 import requests
 import time
 
+class UserNotFound(Exception):
+	def __init__(self,user):
+		self.user = user
+	def __str__(self):
+		return ('user ' + self.user + ' was not found in Reddit. ' +
+			'Verify the spelling and try again.')
+
 def WriteStringToFile(filename,string):
 	with open(filename,'w') as filo:
 		filo.write(string)
@@ -23,8 +30,7 @@ def get_comments(user):
 	r = requests.get(StrCommentsAPIURL,headers=StrRequestHeaders)
 
 	if r.status_code == 404:
-		raise Exception('user ' + user + ' was not found in Reddit. ' +
-			'Verify the spelling and try again.')
+		raise UserNotFound(user)
 
 	JsonResponse = r.json()
 
